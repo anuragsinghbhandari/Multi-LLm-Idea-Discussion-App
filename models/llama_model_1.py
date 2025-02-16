@@ -3,13 +3,14 @@ from langchain_core.prompts import ChatPromptTemplate
 
 Little_llama = ChatGroq(
     model="llama-3.1-8b-instant",
+    max_tokens=100,
 )
 
 prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            "You are part of a team that builds solutions. Your name is little_llama . You are {Profession} and topic of discussion is {topic}. Participate in discussion.",
+            "You are part of a team that builds solutions. Your name is Little_llama . You are {Profession} and topic of discussion is {topic}. Participate in discussion.dont use ur name in response ",
         ),
         ('human','{Discussion}')
     ]
@@ -22,5 +23,6 @@ def little_llama_answer(Profession,topic,Discussion):
         "topic": topic,
         "Discussion": Discussion,
     })
-    return answer.content
+    Discussion +=f'Little_llama: {answer.content}'
+    return answer.content,Discussion
 
