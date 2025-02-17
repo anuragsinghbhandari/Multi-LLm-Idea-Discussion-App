@@ -10,19 +10,20 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            "You are part of a team that builds solutions. Your name is Middle_llama . You are {Profession} and topic of discussion is {topic}. Participate in discussion. don't use your name in response ",
+            "Your name is {name} and you are {Profession} and topic of discussion is {topic}. Participate in discussion and note dont use your name as first letter in response ",
         ),
         ('human','{Discussion}')
     ]
 )
 
 lll_chain = prompt | Middle_llama
-def middle_llama_answer(Profession,topic,Discussion):
+def middle_llama_answer(name,Profession,topic,Discussion):
     answer = lll_chain.invoke({
+        "name": name,
         "Profession": Profession,
         "topic": topic,
         "Discussion": Discussion,
     })
-    Discussion +=f'\n Middle_llama: {answer.content}\n'
+    Discussion +=f'\n {name}: {answer.content}\n'
     return answer.content,Discussion
 
