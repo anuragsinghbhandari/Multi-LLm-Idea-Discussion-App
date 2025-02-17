@@ -13,6 +13,7 @@ if "GROQ_API_KEY" not in os.environ:
 from models.llama_model_1 import little_llama_answer   #LLama3.1
 from models.middle_llama import middle_llama_answer    #LLama3.2
 from models.event_summarizer import summarize          #LLama3.3 to summarize the discussion
+from models.dee_see import dee_see_answer              #deepseek distilled by meta
 
 # Initializing variables in session to perssist even after rerun
 for key in ['ds_clicked', 'ps_clicked', 'plan_disable']: #boolean variables for proper working of functions
@@ -29,9 +30,11 @@ st.session_state.name1 = form.text_input("Name of 1st Character")
 st.session_state.prof1 = form.text_input(f"Profession of 1st Character")
 st.session_state.name2 = form.text_input("Name of 2nd Character")
 st.session_state.prof2 = form.text_input(f"Profession of 2nd Character")
+st.session_state.name3 = form.text_input("Name of 3rd Character")
+st.session_state.prof3 = form.text_input("Profession of 3rd Character")
 
 #storing all input variable for checking later
-states = [st.session_state[var] for var in ['topic', 'name1', 'name2', 'prof1', 'prof2']] 
+states = [st.session_state[var] for var in ['topic', 'name1', 'name2', 'prof1', 'prof2', 'name3', 'prof3']] 
 
 #function to set ds_clicked true for starting discussion
 def discuss_button():   
@@ -57,11 +60,13 @@ start_clicked = form.form_submit_button("Start",on_click=discuss_button)
 if st.session_state.ds_clicked:
     st.title(f"{st.session_state.topic} Discussion")
     #discussion till 10 turns of each
-    for i in range(10):
+    for i in range(5):
         l_answer,st.session_state.Discussion = little_llama_answer(st.session_state.name1,st.session_state.prof1,st.session_state.topic,st.session_state.Discussion)
         st.write(f"{st.session_state.name1}: {l_answer}") #Idea by name1
         m_answer,st.session_state.Discussion = middle_llama_answer(st.session_state.name2,st.session_state.prof2,st.session_state.topic,st.session_state.Discussion)
         st.write(f"{st.session_state.name2}: {m_answer}") #Idea by name2
+        d_answer,st.session_state.Discussion = dee_see_answer(st.session_state.name3,st.session_state.prof3,st.session_state.topic,st.session_state.Discussion)
+        st.write(f"{st.session_state.name3}: {d_answer}") #Idea by name3
     st.session_state.plan = summarize(st.session_state.Discussion)  #discussion summarized and stored in plan
     st.session_state.plan_disable= False    #False to enable the visibility of summarize button
     st.session_state.ds_clicked = False     #False to stop chances of further discussion on rerun
