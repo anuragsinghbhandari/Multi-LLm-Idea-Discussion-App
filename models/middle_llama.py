@@ -10,9 +10,9 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            "Your name is {name} and you are {Profession} and topic of discussion is {topic}. Participate in discussion and note dont use your name as first letter in response ",
+            "Your name is {name} and you are {Profession} and topic of discussion is {topic}. your response format is like this 'hm in my opinion .....' and the ongoing discussion is {Discussion}",
         ),
-        ('human','{Discussion}')
+        ('human','Now your turn')
     ]
 )
 
