@@ -10,9 +10,9 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            "Your name is {name} and you are {Profession} and topic of discussion is {topic}. your response format is like this 'hm in my opinion .....' and the ongoing discussion is {Discussion}",
+            "Your name is {name} and you are {Profession} and topic of discussion is {topic}.You are in a discussion meeting and the ongoing discussion is {Discussion}",
         ),
-        ('human','Now your turn')
+        ('human','Now your turn and answer in less than 100 words avoid repeating ideas')
     ]
 )
 

@@ -3,6 +3,7 @@ from langchain_core.prompts import ChatPromptTemplate
 import re
 deepllm = ChatGroq(
     model="deepseek-r1-distill-qwen-32b",
+    
 )
 
 prompt = ChatPromptTemplate.from_messages(
@@ -15,7 +16,7 @@ prompt = ChatPromptTemplate.from_messages(
         
         The ongoing discussion is: {Discussion}"""
     ),
-    ('human', 'Now your turn')
+    ('human', 'Now your turn and answer in less than 150 words, avoid repeating ideas' )
     ]
 )
 
