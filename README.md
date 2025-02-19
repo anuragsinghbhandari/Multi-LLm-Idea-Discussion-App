@@ -80,7 +80,7 @@ pip install -r requirements.txt
 ```
 
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the APACHE License.
 
 ## Acknowledgements
 - [Meta AI](https://ai.facebook.com/research/) for LLaMA models.
