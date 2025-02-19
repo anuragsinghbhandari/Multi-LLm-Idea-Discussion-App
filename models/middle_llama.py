@@ -3,7 +3,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 Middle_llama = ChatGroq(
     model="llama-3.2-3b-preview",
-    max_tokens=100,
+    max_tokens=150,
 )
 
 prompt = ChatPromptTemplate.from_messages(
@@ -12,7 +12,7 @@ prompt = ChatPromptTemplate.from_messages(
             "system",
             "Your name is {name} and you are {Profession} and topic of discussion is {topic}. You are in a disussion meeting and the ongoing discussion is {Discussion}",
         ),
-        ('human','Now your turn and answer in less than 100 words and avoid repeating ideas')
+        ('human','Now your turn and limit is 100 words and avoid repeating ideas')
     ]
 )
 
