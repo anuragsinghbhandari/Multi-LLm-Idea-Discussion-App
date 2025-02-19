@@ -26,14 +26,17 @@ for var in ['topic', 'name1', 'prof1','name2', 'prof2','name3','prof3','name4','
         st.session_state[var] = ""
 
 #storing all input variable for checking later
-states = [st.session_state[var] for var in ['topic', 'name1', 'name2', 'prof1', 'prof2', 'name3', 'prof3','name4','prof4','name5','prof5']] 
+name_states = ['name1', 'name2', 'name3', 'name4', 'name5']
+prof_states = ['prof1', 'prof2', 'prof3', 'prof4', 'prof5'] 
+active_states = ['active_name1', 'active_name2', 'active_name3', 'active_name4', 'active_name5']
 
+main_states = name_states+prof_states
 #function to set ds_clicked true for starting discussion
 def discuss_button():   
     flag=0
     #to check all inputs are filled
-    for i in range(len(states)):
-        if states[i] == '':
+    for i in range(len(main_states)):
+        if st.session_state[main_states[i]] == '':
             st.warning(f"Please fill {i} field before starting.")
             flag=1
             break   
@@ -47,25 +50,24 @@ def plan_button():
 
 
 #form creation to collect all inputs together on submit
-with st.form("Input form"): #initializing form
+with st.container(height=None): #initializing form
     st.session_state.topic = st.text_input("Topic for discussion")    #27-31 input inside form
-    col1, col2 = st.columns([1,1])  #splitting the screen into 2 columns
-
-    st.session_state.name1 = col1.text_input("Name of 1st Character")   
-    st.session_state.name2 = col1.text_input("Name of 2nd Character")
-    st.session_state.name3 = col1.text_input("Name of 3rd Character")
-    st.session_state.name4 = col1.text_input("Name of 4th Character")
-    st.session_state.name5 = col1.text_input("Name of 5th Character")
-
-    st.session_state.prof1 = col2.text_input(f"Profession of 1st Character")
-    st.session_state.prof2 = col2.text_input(f"Profession of 2nd Character")
-    st.session_state.prof3 = col2.text_input("Profession of 3rd Character")
-    st.session_state.prof4 = col2.text_input("Profession of 4th Character")
-    st.session_state.prof5 = col2.text_input("Profession of 5th Character")
+    row1 = st.columns([0.45,0.45,0.1], vertical_alignment='center')
+    row2 = st.columns([0.45,0.45,0.1], vertical_alignment='center')
+    row3 = st.columns([0.45,0.45,0.1], vertical_alignment='center')
+    row4 = st.columns([0.45,0.45,0.1], vertical_alignment='center')
+    row5 = st.columns([0.45,0.45,0.1], vertical_alignment='center')  #splitting the screen into 3 columns
+    i = 0
+    rows = [row1,row2,row3,row4,row5]
+    for row in rows:
+        st.session_state[name_states[i]] = row[0].text_input(f"Name of Character{i+1}")
+        st.session_state[prof_states[i]] = row[1].text_input(f"Profession of Character {i+1} ")
+        active_states[i] = row[2].toggle(label = '',value=False, help = f'Activate participant {i+1}')
+        i+=1
 
 
     # input submission button for form and direct to discuss_button func on click
-    start_clicked = st.form_submit_button("Start",on_click=discuss_button)
+    start_clicked = st.button("Start",on_click=discuss_button)
 
 #starting of discussion after submission of inputs
 if st.session_state.ds_clicked:
