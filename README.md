@@ -4,22 +4,29 @@
 The **Multi-LLM Idea Discussion App** is a Streamlit-based web application that facilitates interactive discussions on various topics using multiple LLMs (Large Language Models). The app enables role-based discussions between multiple AI models and generates a summarized plan of the conversation.
 
 ## Features
-- Supports three LLMs for generating discussion: **LLaMA-3.1, LLaMA-3.2, and DeepSeek**.
+- Supports three LLMs for generating discussion: **LLaMA-3.1, LLaMA-3.2, DeepSee-by-qwen,deepseek-by-meta and gemma**.
 - Allows users to define characters with names and professions.
+- Allows utilization of required members in discussion
 - Conducts discussions iteratively between the characters.
 - Summarizes discussions into a structured plan using LLaMA-3.3.
 - Streamlit-based UI for easy interaction.
 
 ## Directory Structure
 ```
-├── multi-llm-idea-discussion-app/
+└── multi-llm-idea-discussion-app/
+    ├── README.md
+    ├── Road_ahead.md
     ├── main.py
     ├── requirements.txt
-    └── models/
-        ├── dee_see.py
-        ├── event_summarizer.py
-        ├── llama_model_1.py
-        └── middle_llama.py
+    ├── models/
+    │   ├── dee_see.py
+    │   ├── dee_see_meta.py
+    │   ├── gemma_model.py
+    │   ├── llama_model_1.py
+    │   └── middle_llama.py
+    └── services/
+        └── event_summarizer.py
+
 ```
 
 ## Installation
@@ -57,6 +64,7 @@ The **Multi-LLM Idea Discussion App** is a Streamlit-based web application that 
 - `llama_model_1.py`: Uses **LLaMA-3.1-8b** for generating responses.
 - `middle_llama.py`: Uses **LLaMA-3.2-3b-preview** for responses.
 - `dee_see.py`: Uses **DeepSeek-R1-Distill-Qwen-32B** for generating responses.
+-  dee_see_meta.py: Uses **DeepSeek-R1-Distill-llama-70b** for generating responses.
 - `event_summarizer.py`: Uses **LLaMA-3.3-70b-versatile** to summarize discussions.
 
 ## Dependencies
@@ -78,4 +86,4 @@ This project is licensed under the MIT License.
 - [Meta AI](https://ai.facebook.com/research/) for LLaMA models.
 - [DeepSeek](https://www.deepseek.com/) for their language model.
 - [LangChain](https://www.langchain.com/) for simplifying LLM interactions.
-
+- [Gemma](https://www.ai.google.dev/) for gemma model.
