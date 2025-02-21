@@ -2,7 +2,7 @@ import getpass
 import os
 from dotenv import load_dotenv
 import streamlit as st
-
+import time
 #loading environment variables api key will be automatically fetched by chatgroq
 load_dotenv()
 
@@ -34,6 +34,8 @@ prof_states = ['prof1', 'prof2', 'prof3', 'prof4', 'prof5']
 main_states = name_states+prof_states
 #function to set ds_clicked true for starting discussion
 def discuss_button():
+    st.session_state.Discussion = ""
+    st.session_state.ps_clicked =  False
     if st.session_state.topic == "":
         st.warning("Please fill the topic field before starting.")
         return   
@@ -56,6 +58,10 @@ def plan_button():
     st.session_state.ps_clicked = True   #enables the summarry display
     st.session_state.plan_disable = True    #Disables the summarize button
 
+def response_generator(answer):
+    for word in answer.split():
+        yield word + " "
+        time.sleep(0.1)
 
 
 
@@ -96,32 +102,45 @@ with st.container(height=None): #initializing form
 #starting of discussion after submission of inputs
 if st.session_state.ds_clicked:
     st.title(f"{st.session_state.topic} Discussion")
+
     #discussion till 10 turns of each
     for i in range(5):
         if st.session_state.active_states1:
+            name1_avat = st.chat_message(f"{st.session_state.name1}")
             l_answer,st.session_state.Discussion = little_llama_answer(st.session_state.name1,st.session_state.prof1,st.session_state.topic,st.session_state.Discussion)
-            st.write(f"{st.session_state.name1}: {l_answer}") #Idea by name1
+            name1_avat.write(f"{st.session_state.name1}:")
+            name1_avat.write_stream(response_generator(l_answer)) #Idea by name1
         if st.session_state.active_states2:
+            name2_avat = st.chat_message(f"{st.session_state.name2}")
             m_answer,st.session_state.Discussion = middle_llama_answer(st.session_state.name2,st.session_state.prof2,st.session_state.topic,st.session_state.Discussion)
-            st.write(f"{st.session_state.name2}: {m_answer}") #Idea by name2
+            name2_avat.write(f"{st.session_state.name2}:") #Idea by name2
+            name2_avat.write_stream(response_generator(m_answer))
         if st.session_state.active_states3:
+            name3_avat = st.chat_message(f"{st.session_state.name3}")
             d_answer,st.session_state.Discussion = dee_see_answer(st.session_state.name3,st.session_state.prof3,st.session_state.topic,st.session_state.Discussion)
-            st.write(f"{st.session_state.name3}: {d_answer}") #Idea by name3
+            name3_avat.write(f"{st.session_state.name3}:") #Idea by name3
+            name3_avat.write_stream(response_generator(d_answer))
         if st.session_state.active_states4:
+            name4_avat = st.chat_message(f"{st.session_state.name4}")
             d_m_answer, st.session_state.Discussion = dee_see_meta_answer(st.session_state.name4,st.session_state.prof4,st.session_state.topic,st.session_state.Discussion)
-            st.write(f"{st.session_state.name4}: {d_m_answer}") #Idea by name4
+            name4_avat.write(f"{st.session_state.name4}:") #Idea by name4
+            name4_avat.write_stream(response_generator(d_m_answer))
         if st.session_state.active_states5:
+            name5_avat = st.chat_message(f"{st.session_state.name5}")
             g_answer,st.session_state.Discussion = gemma_answer(st.session_state.name5,st.session_state.prof5,st.session_state.topic,st.session_state.Discussion)
-            st.write(f"{st.session_state.name5}: {g_answer}") #Idea by name5
-
+            name5_avat.write(f"{st.session_state.name5}") #Idea by name5
+            name5_avat.write_stream(response_generator(g_answer))
     st.session_state.plan = summarize(st.session_state.Discussion)  #discussion summarized and stored in plan
     st.session_state.plan_disable= False    #False to enable the visibility of summarize button
-    st.session_state.ds_clicked = False     #False to stop chances of further discussion on rerun
+    st.session_state.ds_clicked = False  #False to rediscission on rerun
 
 #Button to summarize initial state is disabled enables after discussion
-plan_clicked = st.button("Summarize",on_click=plan_button, disabled=st.session_state.plan_disable)  
+plan_clicked = st.button("Summarize",on_click=plan_button, disabled=st.session_state.plan_disable)
 
 #Shows summary
 if st.session_state.ps_clicked:
-    st.markdown(f"concluder: {st.session_state.plan}")
-    
+    st.title("Summary")
+    st.markdown(f"{st.session_state.plan}")
+    st.download_button("Download Summary", data=st.session_state.plan, file_name="summary.txt", mime="text/plain",disabled= not st.session_state.ps_clicked)
+    st.download_button("Download Discussion", data=st.session_state.Discussion, file_name="discussion.txt", mime="text/plain", disabled= not st.session_state.ps_clicked)
+
