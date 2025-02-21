@@ -14,7 +14,7 @@ prompt = ChatPromptTemplate.from_messages(
         The topic of discussion is {topic}.         
         The ongoing discussion is: {Discussion}"""
     ),
-    ('human', 'Now your turn and word limit 100 words, avoid repeating ideas' )
+    ('human', 'Now your turn and word limit is 100 words, avoid repeating ideas' )
     ]
 )
 
