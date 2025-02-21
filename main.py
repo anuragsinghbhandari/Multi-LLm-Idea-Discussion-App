@@ -27,6 +27,7 @@ for var in ['topic', 'name1', 'prof1','name2', 'prof2','name3','prof3','name4','
 for key in ['active_states1', 'active_states2', 'active_states3', 'active_states4', 'active_states5']: #boolean variables for activation of participants
     if key not in st.session_state:
         st.session_state[key] = False
+st.session_state.speed = 1 #speed of discussion
 
 #storing all input variable for checking later
 name_states = ['name1', 'name2', 'name3', 'name4', 'name5']
@@ -58,10 +59,10 @@ def plan_button():
     st.session_state.ps_clicked = True   #enables the summarry display
     st.session_state.plan_disable = True    #Disables the summarize button
 
-def response_generator(answer):
+def response_generator(answer, speed=st.session_state.speed):
     for word in answer.split():
         yield word + " "
-        time.sleep(0.1)
+        time.sleep(0.5/speed)
 
 
 
@@ -97,8 +98,14 @@ with st.container(height=None): #initializing form
 
     finalize_participants = st.button("Finalize Participants", help="Click this to activate the required participant") #button to finalize participants
     # input submission button for form and direct to discuss_button func on click
-    start_clicked = st.button("Start",on_click=discuss_button)
-
+    col1, col2 = st.columns([1,3],vertical_alignment='center')
+    with col1:
+        start_clicked = st.button("Start",on_click=discuss_button)
+    with col2:
+        options = {'1x':1, '2x':2, '4x':4,'ASAP':100}
+        selection = st.segmented_control("Speed of discussion", options.keys(),default='1x',on_change=discuss_button)
+        st.session_state.speed = options[selection]
+        
 #starting of discussion after submission of inputs
 if st.session_state.ds_clicked:
     st.title(f"{st.session_state.topic} Discussion")
@@ -109,27 +116,27 @@ if st.session_state.ds_clicked:
             name1_avat = st.chat_message(f"{st.session_state.name1}")
             l_answer,st.session_state.Discussion = little_llama_answer(st.session_state.name1,st.session_state.prof1,st.session_state.topic,st.session_state.Discussion)
             name1_avat.write(f"{st.session_state.name1}:")
-            name1_avat.write_stream(response_generator(l_answer)) #Idea by name1
+            name1_avat.write_stream(response_generator(l_answer, st.session_state.speed)) #Idea by name1
         if st.session_state.active_states2:
             name2_avat = st.chat_message(f"{st.session_state.name2}")
             m_answer,st.session_state.Discussion = middle_llama_answer(st.session_state.name2,st.session_state.prof2,st.session_state.topic,st.session_state.Discussion)
             name2_avat.write(f"{st.session_state.name2}:") #Idea by name2
-            name2_avat.write_stream(response_generator(m_answer))
+            name2_avat.write_stream(response_generator(m_answer, st.session_state.speed))
         if st.session_state.active_states3:
             name3_avat = st.chat_message(f"{st.session_state.name3}")
             d_answer,st.session_state.Discussion = dee_see_answer(st.session_state.name3,st.session_state.prof3,st.session_state.topic,st.session_state.Discussion)
             name3_avat.write(f"{st.session_state.name3}:") #Idea by name3
-            name3_avat.write_stream(response_generator(d_answer))
+            name3_avat.write_stream(response_generator(d_answer, st.session_state.speed))
         if st.session_state.active_states4:
             name4_avat = st.chat_message(f"{st.session_state.name4}")
             d_m_answer, st.session_state.Discussion = dee_see_meta_answer(st.session_state.name4,st.session_state.prof4,st.session_state.topic,st.session_state.Discussion)
             name4_avat.write(f"{st.session_state.name4}:") #Idea by name4
-            name4_avat.write_stream(response_generator(d_m_answer))
+            name4_avat.write_stream(response_generator(d_m_answer,st.session_state.speed))
         if st.session_state.active_states5:
             name5_avat = st.chat_message(f"{st.session_state.name5}")
             g_answer,st.session_state.Discussion = gemma_answer(st.session_state.name5,st.session_state.prof5,st.session_state.topic,st.session_state.Discussion)
             name5_avat.write(f"{st.session_state.name5}") #Idea by name5
-            name5_avat.write_stream(response_generator(g_answer))
+            name5_avat.write_stream(response_generator(g_answer, st.session_state.speed))
     st.session_state.plan = summarize(st.session_state.Discussion)  #discussion summarized and stored in plan
     st.session_state.plan_disable= False    #False to enable the visibility of summarize button
     st.session_state.ds_clicked = False  #False to rediscission on rerun
