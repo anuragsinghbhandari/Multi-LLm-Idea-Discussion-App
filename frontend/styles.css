@@ -1,0 +1,124 @@
+body{
+    background-color: black; 
+    color: white;
+    
+}
+.header{
+    width: 97%;
+    min-height: 180px;
+    border: 2px solid black;
+    overflow: hidden;
+    word-wrap: break-word;
+    color: black;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    border-radius: 40px 40px 0 0;
+    padding: 10px 0px 0px 20px; 
+    box-shadow: 0 10px 20px white;
+    margin: auto;
+    margin-bottom: 20px;
+}
+.header h1{
+    margin-top: 10px; 
+    font-family: 'Courier New', Courier, monospace;
+}
+.header p{ 
+    margin-left: 1.5em; 
+    font-size:x-large; 
+    font-style: italic; 
+    font-family: 'Courier New', Courier, monospace;
+}
+.main-area{
+    width: 98%;
+    margin: auto;
+    min-height: 400px;
+    display: flex;
+}
+
+.left-container{
+    width: 48%;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    min-height: 400px;
+    border:2px solid black;
+    box-shadow: 0 10px 20px white;
+    margin-right: 2%;
+    
+    display: flex;
+    justify-content: left;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    border-radius: 0 0 0 40px;
+}
+.submission-form{
+    width: 100%;
+    margin: 10px 0 10px 5%;
+    padding-bottom: 20px;
+    
+}
+
+.n_p_input{
+    display: flex;
+    width: 100%;
+}
+
+.name{
+    width: 40%;
+    margin-right: 10px;
+}
+
+.profession{
+    width: 40%;
+}
+
+
+button{
+    font-size: 16px;
+    width: 50%;
+    margin: 20px 20% 20px 20%;
+    padding: 10px;
+    border-radius: 100px;
+}
+.submission-form label{
+    display: block;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+.submission-form input{
+    width: 80%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #f8f9fa;
+    flex: 1;
+}
+.right-container{
+    width: 48%;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    min-height: 400px;
+    border:2px solid black;
+    box-shadow: 0 10px 20px white;
+    margin-left: 2%;
+    border-radius: 0 0 40px 0;
+}
+
+@media (max-width: 1000px){
+    .header{
+        width: 94%
+    }
+    .main-area{
+        flex-direction: column;
+        width: 94%;
+        margin: auto;
+        background-color: white;
+    }
+    .left-container{
+        width: 100%;
+        border-radius: 0 0 40px 40px;
+    }
+    .right-container{
+        width: 100%;
+    }
+}
