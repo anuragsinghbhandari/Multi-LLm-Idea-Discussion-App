@@ -3,7 +3,7 @@ from langchain_core.prompts import ChatPromptTemplate
 import re
 deepllm = ChatGroq(
     model="deepseek-r1-distill-qwen-32b",
-    
+    temperature = 1,
 )
 
 prompt = ChatPromptTemplate.from_messages(

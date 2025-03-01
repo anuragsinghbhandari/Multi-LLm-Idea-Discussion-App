@@ -4,6 +4,7 @@ from langchain_core.prompts import ChatPromptTemplate
 Middle_llama = ChatGroq(
     model="llama-3.2-3b-preview",
     max_tokens=150,
+    temperature=1,
 )
 
 prompt = ChatPromptTemplate.from_messages(
