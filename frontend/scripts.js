@@ -1,7 +1,7 @@
 setTimeout(() => {
     window.scrollBy({ top: 250, behavior: "smooth" });
 }, 7000);
-
+/* Streaming Header test */
 const paragraph = "Hi there, * We team of multiple llms are here to discuss your ideas, * ideas leads to greatness and let us help you give your ideas more perspectives.";
 let index = 0;
 
@@ -20,6 +20,8 @@ function streamtext(){
 }
 
 streamtext();
+
+/* discussion start function after form submission */
 document.getElementById('data-form').addEventListener("submit", async function(event){
     event.preventDefault();
     const data = {
@@ -35,16 +37,37 @@ document.getElementById('data-form').addEventListener("submit", async function(e
         profession3: document.getElementById('profession3').value,
         profession4: document.getElementById('profession4').value,
     };
-    
-    const response = await fetch("http://127.0.0.1:8000/discussion/", {
+
+    const response = await fetch("http://127.0.0.1:8000/send_data/", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify(data)
     });
-    const result = await response.json();
-    document.getElementById("right-container").innerHTML += result.message;
+    
+    if (response.ok){
+        if (window.eventSource){
+            window.eventSource.close();
+    
+        };
+        let msg =0;
+        window.eventSource = new EventSource(`http://127.0.0.1:8000/discussion/`);
+        
+        window.eventSource.onmessage = function(event) {
+            msg++;
+            document.getElementById('right-container').innerHTML += event.data +"<br>";
+            if (msg==15){
+            window.eventSource.close();
+            }
+        };
+        
+        
+        window.eventSource.onerror = function(event) {
+            console.error("SSE Error:", event);
+            window.eventSource.close();
+        };
+        console.log("last");
+    };
+   
 });
 
 
