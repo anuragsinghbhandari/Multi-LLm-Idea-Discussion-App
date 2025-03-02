@@ -15,6 +15,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 #loading environment variables api key will be automatically fetched by chatgroq
@@ -46,13 +47,34 @@ from models.gemma_model import gemma_answer            #Gemma model
 
 Discussion = ""
 
-# def data_stream(data: DataModel):
-#     global Discussion
-#     for i in range(3):
-#         answer1, Discussion = little_llama_answer(data.name, data.profession, data.topic, Discussion)
-#         yield {"message": 'f"{data.name}: {answer1}"'}
+@app.post("/send_data/")
+async def recieve_json(data: DataModel):
+    global main_data
+    main_data = data
+    print(main_data)
+    print("starting")
+    return {"message": "started"}
 
 
-# @app.post("/discussion/")
-# async def process_data(data: DataModel):
-#     return StreamingResponse(data_stream(data), media_type="text/event-stream")
+def data_stream():
+    global Discussion
+    global main_data
+    for i in range(3):
+        print("loop")
+        answer, Discussion = little_llama_answer(main_data.name, main_data.profession, main_data.topic, Discussion)
+        yield f"data: {main_data.name}: {answer}\n\n"
+        answer1, Discussion = middle_llama_answer(main_data.name1, main_data.profession1, main_data.topic, Discussion)
+        yield f"data: {main_data.name1}: {answer1}\n\n"
+        answer2, Discussion = dee_see_answer(main_data.name2, main_data.profession2, main_data.topic, Discussion)
+        yield f"data: {main_data.name2}: {answer2}\n\n"
+        answer3, Discussion = dee_see_meta_answer(main_data.name3, main_data.profession3, main_data.topic, Discussion)
+        yield f"data: {main_data.name3}: {answer3}\n\n"
+        answer4, Discussion = gemma_answer(main_data.name4, main_data.profession4, main_data.topic, Discussion)
+        yield f"data: {main_data.name4}: {answer4}\n\n"
+        
+
+
+@app.get("/discussion/")
+async def process_data():
+    print('processing')
+    return StreamingResponse(data_stream(), media_type="text/event-stream")
