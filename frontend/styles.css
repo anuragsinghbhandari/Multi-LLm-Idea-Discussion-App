@@ -38,6 +38,7 @@ body{
     width: 48%;
     background: linear-gradient(135deg, #6e8efb, #a777e3);
     min-height: 400px;
+    max-height: 700px;
     border:2px solid black;
     box-shadow: 0 10px 20px white;
     margin-right: 2%;
@@ -48,7 +49,12 @@ body{
     padding-top: 10px;
     font-family: Georgia, 'Times New Roman', Times, serif;
     border-radius: 0 0 0 40px;
+   
 }
+
+
+
+
 .submission-form{
     width: 100%;
     margin: 10px 0 10px 5%;
@@ -102,6 +108,9 @@ button{
     box-shadow: 0 10px 20px white;
     margin-left: 2%;
     border-radius: 0 0 40px 0;
+    padding: 10px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 20px;
 }
 
 @media (max-width: 1000px){
@@ -112,7 +121,7 @@ button{
         flex-direction: column;
         width: 94%;
         margin: auto;
-        background-color: white;
+        
     }
     .left-container{
         width: 100%;
