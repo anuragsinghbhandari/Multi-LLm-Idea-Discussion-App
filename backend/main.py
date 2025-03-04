@@ -49,6 +49,8 @@ Discussion = ""
 
 @app.post("/send_data/")
 async def recieve_json(data: DataModel):
+    global Discussion
+    Discussion = ""
     global main_data
     main_data = data
     print(main_data)
