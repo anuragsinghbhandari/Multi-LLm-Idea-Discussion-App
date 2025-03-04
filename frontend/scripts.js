@@ -39,7 +39,7 @@ document.getElementById('data-form').addEventListener("submit", async function(e
         profession4: document.getElementById('profession4').value,
     };
 
-    const response = await fetch("http://127.0.0.1:8000/send_data/", {
+    const response = await fetch("https://discussion-pannel-ai.onrender.com/send_data/", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(data)
@@ -51,7 +51,7 @@ document.getElementById('data-form').addEventListener("submit", async function(e
     
         };
         let msg =0;
-        window.eventSource = new EventSource(`http://127.0.0.1:8000/discussion/`);
+        window.eventSource = new EventSource(`https://discussion-pannel-ai.onrender.com/discussion/`);
         
         window.eventSource.onmessage = function(event) {
             msg++;
