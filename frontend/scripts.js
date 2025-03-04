@@ -24,6 +24,7 @@ streamtext();
 /* discussion start function after form submission */
 document.getElementById('data-form').addEventListener("submit", async function(event){
     event.preventDefault();
+    document.getElementById("right-container").innerHTML = "";
     const data = {
         topic: document.getElementById('topic').value,
         name: document.getElementById('name').value,
@@ -54,7 +55,7 @@ document.getElementById('data-form').addEventListener("submit", async function(e
         
         window.eventSource.onmessage = function(event) {
             msg++;
-            document.getElementById('right-container').innerHTML += event.data +"<br>";
+            document.getElementById('right-container').innerHTML += event.data +"<br><br>";
             if (msg==15){
             window.eventSource.close();
             }
