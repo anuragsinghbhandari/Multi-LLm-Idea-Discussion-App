@@ -11,7 +11,7 @@ body{
     word-wrap: break-word;
     color: black;
     background: linear-gradient(135deg, #6e8efb, #a777e3);
-    border-radius: 40px 40px 0 0;
+    border-radius: 40px 40px 40px 40px;
     padding: 10px 0px 0px 20px; 
     box-shadow: 0 10px 20px white;
     margin: auto;
@@ -48,7 +48,7 @@ body{
     padding-left: 10px;
     padding-top: 10px;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    border-radius: 0 0 0 40px;
+    border-radius: 40px 40px 40px 40px;
    
 }
 
@@ -107,7 +107,7 @@ button{
     border:2px solid black;
     box-shadow: 0 10px 20px white;
     margin-left: 2%;
-    border-radius: 0 0 40px 0;
+    border-radius: 40px 40px 40px 40px;
     padding: 10px;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 20px;
@@ -120,14 +120,16 @@ button{
     .main-area{
         flex-direction: column;
         width: 94%;
-        margin: auto;
+        margin: 10px;
         
     }
     .left-container{
         width: 100%;
-        border-radius: 0 0 40px 40px;
+        margin-left: 10px;
     }
     .right-container{
-        width: 100%;
+        width: 99%;
+        margin-top: 10px;
+        margin-right: 100px;
     }
 }
