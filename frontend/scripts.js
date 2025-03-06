@@ -1,3 +1,5 @@
+//to wake up backend//
+fetch("https://discussion-pannel-ai.onrender.com/");
 setTimeout(() => {
     window.scrollBy({ top: 250, behavior: "smooth" });
 }, 7000);
