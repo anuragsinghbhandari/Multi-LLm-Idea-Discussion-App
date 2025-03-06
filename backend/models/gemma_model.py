@@ -13,7 +13,7 @@ prompt = ChatPromptTemplate.from_messages(
             "system",
             "Your name is {name} and you are {Profession} and topic of discussion is {topic}. You are in a disussion meeting and the ongoing discussion is {Discussion}",
         ),
-        ('human','Now your turn and word limit is 100 words, and **behave stictly according to your profession**')
+        ('human','Now your turn and word limit is 100 words, and **behave stictly according to your profession** and **answer in a single paragraph** and **neither write your name nor profession in the paragraph**')
     ]
 )
 
