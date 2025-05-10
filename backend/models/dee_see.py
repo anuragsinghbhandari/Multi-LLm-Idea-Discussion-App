@@ -2,7 +2,7 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 import re
 deepllm = ChatGroq(
-    model="deepseek-r1-distill-qwen-32b",
+    model="qwen-qwq-32b",
     temperature = 1,
 )
 
