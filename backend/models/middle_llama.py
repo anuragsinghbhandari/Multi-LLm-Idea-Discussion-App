@@ -2,7 +2,7 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 
 Middle_llama = ChatGroq(
-    model="llama-3.2-3b-preview",
+    model="llama3-8b-8192",
     max_tokens=150,
     temperature=1,
 )
