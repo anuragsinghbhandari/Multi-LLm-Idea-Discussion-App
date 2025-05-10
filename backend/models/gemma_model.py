@@ -2,7 +2,7 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 
 Gemma_model = ChatGroq(
-    model="qwen-2.5-32b",
+    model="gemma2-9b-it",
     max_tokens=150,
     temperature=1,
 )
