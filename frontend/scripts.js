@@ -75,14 +75,10 @@ document.getElementById('data-form').addEventListener("submit", async function(e
 
 document.getElementById('summarize').addEventListener("click", async function(event){
     event.preventDefault();
-    const response = await fetch("https://discussion-pannel-ai.onrender.com/summarize/", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({summarize: true})
-    });
+    const response = await fetch("https://discussion-pannel-ai.onrender.com/summarize/");
     if (response.ok){
         const data = await response.json();
-        document.getElementById('right-container').innerHTML += 'Summary:\n' + data.summary;
+        document.getElementById('right-container').innerHTML = 'Summary:\n' + data.summary;
     } else {
         console.log("Error getting summary")
     }
