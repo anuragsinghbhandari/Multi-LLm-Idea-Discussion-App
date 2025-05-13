@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from .services.event_summarizer import summarize
+from services.event_summarizer import summarize
 
 app = FastAPI()
 
