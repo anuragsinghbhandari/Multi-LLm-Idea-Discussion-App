@@ -6,7 +6,6 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from services.event_summarizer import summarize
 
 app = FastAPI()
 
@@ -39,12 +38,12 @@ class DataModel(BaseModel):
     name4: str
     profession4: str
 
-from models.llama_model_1 import little_llama_answer   #LLama3.1
-from models.middle_llama import middle_llama_answer    #LLama3.2
-from services.event_summarizer import summarize          #LLama3.3 to summarize the discussion
-from models.dee_see import dee_see_answer              #deepseek distilled by qwen
-from models.dee_see_meta import dee_see_meta_answer    #deepseek distilled by meta
-from models.gemma_model import gemma_answer            #Gemma model
+from .models.llama_model_1 import little_llama_answer   #LLama3.1
+from .models.middle_llama import middle_llama_answer    #LLama3.2
+from .models.dee_see import dee_see_answer              #deepseek distilled by qwen
+from .models.dee_see_meta import dee_see_meta_answer    #deepseek distilled by meta
+from .models.gemma_model import gemma_answer            #Gemma model
+from .services.event_summarizer import summarize
 
 Discussion = ""
 
