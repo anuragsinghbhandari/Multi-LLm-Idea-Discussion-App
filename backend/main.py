@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from .services.event_summarizer import summarize
 
 app = FastAPI()
 
@@ -80,3 +81,10 @@ def data_stream():
 async def process_data():
     print('processing')
     return StreamingResponse(data_stream(), media_type="text/event-stream")
+
+@app.get('/summarize/')
+async def summarize_data():
+    global Discussion
+    print("summarizing")
+    summary = summarize(Discussion)
+    return {"summary": summary}
